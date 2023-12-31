@@ -6,6 +6,10 @@ Como fazer testes end to end em uma Web API feita em JavaScript sem necessidade 
 
 Node@20.9.0
 
+## Como rodar
+
+`npm run test:dev`: sobe o servidor e roda os testes.
+
 ## Aprendizagens
 
 ### npm e node cli
@@ -22,3 +26,4 @@ Node@20.9.0
 ### node
 
 - `createServer(handler)`: função nativa que cria um servidor com request e response.
+- A função `fetch()` pode ser usada substituindo a biblioteca `supertest`.
