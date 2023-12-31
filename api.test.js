@@ -1,11 +1,11 @@
-import { IncomingMessage, ServerResponse, Server } from "node:http";
+import { Server } from "node:http";
 import { describe, before, after, it } from "node:test";
 import assert from "node:assert";
 
 const BASE_URL = "http://localhost:3000";
 
 describe("Login API", () => {
-  /** @type {Server<typeof IncomingMessage, typeof ServerResponse>} */
+  /** @type {Server} */
   let _server = {};
 
   // Antes de rodar os testes, inicializar o servidor.
@@ -37,5 +37,23 @@ describe("Login API", () => {
     const response = await request.json();
 
     assert.deepStrictEqual(response, { error: "user invalid" });
+  });
+
+  it("should login successfully given user and password", async () => {
+    const data = {
+      user: "eduardofernandes",
+      password: "123",
+    };
+
+    const request = await fetch(`${BASE_URL}/login`, {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+
+    assert.strictEqual(request.status, 200);
+
+    const response = await request.json();
+
+    assert.ok(response.token, "JWT token should exist");
   });
 });
