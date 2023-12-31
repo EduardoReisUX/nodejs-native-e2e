@@ -7,6 +7,7 @@ const BASE_URL = "http://localhost:3000";
 describe("Login API", () => {
   /** @type {Server} */
   let _server = {};
+  let _globalToken = "";
 
   // Antes de rodar os testes, inicializar o servidor.
   // Neste caso está sendo utilizado dynamic import.
@@ -55,5 +56,34 @@ describe("Login API", () => {
     const response = await request.json();
 
     assert.ok(response.token, "JWT token should exist");
+    _globalToken = response.token;
+  });
+
+  it("should not be allowed to access private data without a token", async () => {
+    const request = await fetch(`${BASE_URL}/`, {
+      method: "GET",
+      headers: {
+        authorization: "",
+      },
+    });
+
+    assert.strictEqual(request.status, 400);
+
+    const response = await request.json();
+
+    assert.deepStrictEqual(response, { error: "invalid token!" });
+  });
+
+  it("should be allowed to access private data with a valid token", async () => {
+    const request = await fetch(`${BASE_URL}/login`, {
+      method: "GET",
+      headers: { authorization: _globalToken },
+    });
+
+    assert.strictEqual(request.status, 200);
+
+    const response = await request.json();
+
+    assert.deepStrictEqual(response, { result: "Hey, Welcome!" });
   });
 });
