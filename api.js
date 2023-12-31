@@ -1,10 +1,13 @@
 import { once } from "node:events";
 import { createServer } from "node:http";
+import JWT from "jsonwebtoken";
 
 const DEFAULT_USER = {
   user: "eduardofernandes",
   password: "123",
 };
+
+const JWT_KEY = "abc123";
 
 /** @type {import("node:http").RequestListener} */
 async function loginRoute(request, response) {
@@ -16,7 +19,9 @@ async function loginRoute(request, response) {
     return;
   }
 
-  response.end("OK");
+  const token = JWT.sign({ user, message: "hey duuude!" }, JWT_KEY);
+
+  response.end(JSON.stringify({ token }));
 }
 
 /** @type {RequestListener} */
