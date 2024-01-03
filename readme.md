@@ -27,7 +27,7 @@ Como fazer testes end to end em uma Web API feita em JavaScript sem necessidade 
 
 - `createServer(handler)`: função nativa que cria um servidor com request e response.
 - A função `fetch()` pode ser usada substituindo a biblioteca `supertest`.
-
+- A função `node:event.once()` é um listener que aguarda por um evento ser emitido. No exemplo `await once(request, "data")` diz o programa para esperar até que o evento "data" seja emitido pelo request. É equivalente a `request.on("data", (chunk) => { ... }`
 
 ## Erros corrigidos
 
@@ -62,3 +62,10 @@ async function handler(request, response) {
     // ...
 }
 ```
+
+## Fontes: 
+
+- [Como criar testes E2E em Node.js sem frameworks || passo a passo! || Erick Wendel](https://www.youtube.com/watch?v=xSDJnj-pgxU)
+- [Ninguém deveria precisar de Postman/Insomnia pra testar um endpoint || Erick Wendel](https://www.youtube.com/watch?v=SrpIo_V-ZCg)
+- [Node.js - events.once()](https://nodejs.org/api/events.html#eventsonceemitter-name-options)
+- [Node.js - Anatomy of an HTTP Transaction](https://nodejs.org/en/guides/anatomy-of-an-http-transaction)
