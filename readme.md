@@ -1,6 +1,6 @@
 # Testes e2e com Node (sem frameworks)
 
-Como fazer testes end to end em uma Web API feita em JavaScript sem necessidade de qualquer framework ou biblioteca.
+Testes end to end em uma Web API feita em JavaScript puro sem necessidade de qualquer framework ou biblioteca.
 
 ## Ferramentas
 
@@ -8,7 +8,9 @@ Como fazer testes end to end em uma Web API feita em JavaScript sem necessidade 
 
 ## Como rodar
 
-`npm run test:dev`: sobe o servidor e roda os testes.
+- `npm run dev`: sobe o servidor.
+- `npm run test` ou `npm t`: sobe o servidor e roda os testes e2e.
+- `npm run test:dev`: sobe o servidor e roda os testes e2e em watch mode.
 
 ## Aprendizagens
 
@@ -25,9 +27,15 @@ Como fazer testes end to end em uma Web API feita em JavaScript sem necessidade 
 
 ### node
 
-- `createServer(handler)`: função nativa que cria um servidor com request e response.
-- A função `fetch()` pode ser usada substituindo a biblioteca `supertest`.
+- `createServer(handler)`: função nativa que cria um servidor com request e response. Todo o back end pode ser feito a partir do pacote `http` do próprio node.
+- A função `fetch()` pode ser usada para fazer requisições no ambiente de testes e substituir a biblioteca `supertest`.
 - A função `node:event.once()` é um listener que aguarda por um evento ser emitido. No exemplo `await once(request, "data")` diz o programa para esperar até que o evento "data" seja emitido pelo request. É equivalente a `request.on("data", (chunk) => { ... }`
+
+### eslint
+
+O javascript nativamente não possui uma análise de código, então é utilizado o pacote eslint para isso:
+
+- `npx eslint .`: Faz a análise de todo o código do projeto, indicando erros e avisos (`no-unused-vars`, `no-undef`, ...).
 
 ## Erros corrigidos
 
