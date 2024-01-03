@@ -80,4 +80,67 @@ describe("/login", () => {
 
     assert.deepStrictEqual(response, { result: "Hey, Welcome!" });
   });
+
+  it("should create a premium product", async () => {
+    const input = {
+      description: "pasta de dente",
+      price: 101,
+    };
+
+    const request = await fetch(`${BASE_URL}/products`, {
+      method: "POST",
+      body: JSON.stringify(input),
+      headers: {
+        authorization: _globalToken,
+      },
+    });
+
+    assert.strictEqual(request.status, 200);
+
+    const data = await request.json();
+
+    assert.deepStrictEqual(data.category, "premium");
+  });
+
+  it("should create a regular product", async () => {
+    const input = {
+      description: "enxaguante bucal",
+      price: 77,
+    };
+
+    const request = await fetch(`${BASE_URL}/products`, {
+      method: "POST",
+      body: JSON.stringify(input),
+      headers: {
+        authorization: _globalToken,
+      },
+    });
+
+    assert.strictEqual(request.status, 200);
+
+    const data = await request.json();
+
+    assert.deepStrictEqual(data.category, "regular");
+  });
+
+  it("should create a basic product", async () => {
+    const input = {
+      description: "escova de dente",
+      price: 36,
+    };
+
+    const request = await fetch(`${BASE_URL}/products`, {
+      method: "POST",
+      body: JSON.stringify(input),
+      headers: {
+        authorization: _globalToken,
+      },
+    });
+
+    assert.strictEqual(request.status, 200);
+
+    const data = await request.json();
+
+    assert.deepStrictEqual(data.category, "basic");
+  });
 });
