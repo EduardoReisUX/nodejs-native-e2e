@@ -1,37 +1,9 @@
 "use strict";
 
 import { createServer } from "node:http";
-import { loginRoute } from "./login/login.routes.js";
-import { isHeadersValid } from "./login/utils.js";
-import { once } from "node:events";
-
-/** @type {import("node:http").RequestListener} */
-async function createProductRoute(request, response) {
-  /** @type {{ description: string, price: string }}  */
-  const { description, price } = JSON.parse(await once(request, "data"));
-
-  const categories = {
-    basic: {
-      from: 0,
-      to: 49,
-    },
-    regular: {
-      from: 50,
-      to: 99,
-    },
-    premium: {
-      from: 100,
-      to: 101,
-    },
-  };
-
-  const category = Object.keys(categories).find((key) => {
-    const category = categories[key];
-    return price >= category.from && price <= category.to;
-  });
-
-  response.end(JSON.stringify({ category }));
-}
+import { loginRoute } from "./src/login/login.routes.js";
+import { isHeadersValid } from "./src/login/utils.js";
+import { createProductRoute } from "./src/products/products.routes.js";
 
 /** @type {import("node:http").RequestListener} */
 async function handler(request, response) {
