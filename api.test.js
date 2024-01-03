@@ -81,6 +81,27 @@ describe("/login", () => {
     assert.deepStrictEqual(response, { result: "Hey, Welcome!" });
   });
 
+  it("should not create a product without a valid token", async () => {
+    const input = {
+      description: "pasta de dente",
+      price: 101,
+    };
+
+    const request = await fetch(`${BASE_URL}/products`, {
+      method: "POST",
+      body: JSON.stringify(input),
+      headers: {
+        authorization: "",
+      },
+    });
+
+    assert.strictEqual(request.status, 400);
+
+    const response = await request.json();
+
+    assert.deepStrictEqual(response, { error: "invalid token!" });
+  });
+
   it("should create a premium product", async () => {
     const input = {
       description: "pasta de dente",
